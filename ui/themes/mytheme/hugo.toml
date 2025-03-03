@@ -1,0 +1,9 @@
+# Theme config.
+defaultContentLanguage = "en"
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+  [languages.vi]
+    languageName = "Tiếng Việt"
+    weight = 2

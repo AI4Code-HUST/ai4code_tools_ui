@@ -1,0 +1,15 @@
+{{ define "main" }}
+{{ .Content }}
+
+<div>
+    {{ range .Paginator.Pages }}
+    {{ $u := .Path | relURL }}
+    {{ if or (eq $u "/\\index.vi.md") (eq $u "/\\index.en.md") }}
+    {{ else }}
+    {{- partial "horizontal_card.html" . -}}
+    {{ end}}
+    {{ end }}
+    {{- partial "pagination.html" . -}}
+</div>
+
+{{ end }}

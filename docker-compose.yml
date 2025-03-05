@@ -1,0 +1,8 @@
+services:
+  hugo:
+    image: klakegg/hugo:ext-alpine  # Use the official Hugo image
+    volumes:
+      - .:/app                      # Mount local files to the container
+    ports:
+      - "1313:1313"                 # Expose the Hugo live reload port
+    command: hugo server --bind 0.0.0.0 --baseURL http://localhost:1313 --appendPort=false --disableFastRender

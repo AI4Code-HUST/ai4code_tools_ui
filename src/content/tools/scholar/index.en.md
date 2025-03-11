@@ -23,34 +23,34 @@ A tool designed to automatically extract and organize academic publications from
     const url = 'https://raw.githubusercontent.com/manhtdd/scholar_alters/master/data/papers.jsonl'; 
     try {
       const response = await fetch(url);
-    //   const data = await response.json();
+      const data = await response.json();
 
-      const data = [
-      {
-        "title": "Research on AI in Healthcare",
-        "link": "https://example.com/paper1",
-        "topic": "Artificial Intelligence",
-        "branch": "Healthcare"
-      },
-      {
-        "title": "Quantum Computing for Beginners",
-        "link": "https://example.com/paper2",
-        "topic": "Quantum Computing",
-        "branch": "Computer Science"
-      },
-      {
-        "title": "Deep Learning for Natural Language Processing",
-        "link": "https://example.com/paper3",
-        "topic": "Deep Learning",
-        "branch": "NLP"
-      },
-      {
-        "title": "Blockchain Technology and Its Applications",
-        "link": "https://example.com/paper4",
-        "topic": "Blockchain",
-        "branch": "Cryptography"
-      }
-    ];
+    //   const data = [
+    //   {
+    //     "title": "Research on AI in Healthcare",
+    //     "link": "https://example.com/paper1",
+    //     "topic": "Artificial Intelligence",
+    //     "branch": "Healthcare"
+    //   },
+    //   {
+    //     "title": "Quantum Computing for Beginners",
+    //     "link": "https://example.com/paper2",
+    //     "topic": "Quantum Computing",
+    //     "branch": "Computer Science"
+    //   },
+    //   {
+    //     "title": "Deep Learning for Natural Language Processing",
+    //     "link": "https://example.com/paper3",
+    //     "topic": "Deep Learning",
+    //     "branch": "NLP"
+    //   },
+    //   {
+    //     "title": "Blockchain Technology and Its Applications",
+    //     "link": "https://example.com/paper4",
+    //     "topic": "Blockchain",
+    //     "branch": "Cryptography"
+    //   }
+    // ];
 
       window.fetchedData = data;
 

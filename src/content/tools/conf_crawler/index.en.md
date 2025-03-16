@@ -17,6 +17,10 @@ css:
 
 # Conference & Journal Papers Crawler
 
+A tool designed to automatically extract and organize academic publications from conference and journal websites. By parsing the websites, this project collects metadata such as article titles and theirs links to help researchers stay updated with the latest publications in their field.
+
+---
+
 <div>
     <div class="justify-content-end pb-1">
         <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch">
@@ -45,9 +49,3 @@ css:
     </div>
     {{< include-js path="paper.js" >}}
 </div>
-
----
-
-## Conference & Journal Papers Crawler
-
-A tool designed to automatically extract and organize academic publications from conference and journal websites. By parsing the websites, this project collects metadata such as article titles and theirs links to help researchers stay updated with the latest publications in their field.

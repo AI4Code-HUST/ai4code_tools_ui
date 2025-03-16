@@ -14,62 +14,38 @@ A tool designed to automatically extract and organize academic publications from
 
 ## Papers List
 
-| Topic | Branch | Papers |
-|-------|--------|--------|
+| Topic      | Branch     | Papers     |
+| ---------- | ---------- | ---------- |
 | Loading... | Loading... | Loading... |
 
 <script type="text/javascript">
   async function fetchData() {
-    const url = 'https://raw.githubusercontent.com/manhtdd/scholar_alters/master/data/papers.jsonl'; 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
+  const url = 'https://raw.githubusercontent.com/manhtdd/scholar_alters/master/data/papers.jsonl';
+  try {
+    const response = await fetch(url);
+    const textData = await response.text(); // Read the response as text
+    const lines = textData.trim().split('\n'); // Split the text into lines
+    const data = lines.map(line => JSON.parse(line)); // Parse each line as JSON
+    console.log(data);
 
-    //   const data = [
-    //   {
-    //     "title": "Research on AI in Healthcare",
-    //     "link": "https://example.com/paper1",
-    //     "topic": "Artificial Intelligence",
-    //     "branch": "Healthcare"
-    //   },
-    //   {
-    //     "title": "Quantum Computing for Beginners",
-    //     "link": "https://example.com/paper2",
-    //     "topic": "Quantum Computing",
-    //     "branch": "Computer Science"
-    //   },
-    //   {
-    //     "title": "Deep Learning for Natural Language Processing",
-    //     "link": "https://example.com/paper3",
-    //     "topic": "Deep Learning",
-    //     "branch": "NLP"
-    //   },
-    //   {
-    //     "title": "Blockchain Technology and Its Applications",
-    //     "link": "https://example.com/paper4",
-    //     "topic": "Blockchain",
-    //     "branch": "Cryptography"
-    //   }
-    // ];
+    window.fetchedData = data;
 
-      window.fetchedData = data;
+    const table = document.querySelector('table tbody');
+    table.innerHTML = '';
 
-      const table = document.querySelector('table tbody');
-      table.innerHTML = ''; 
-
-      data.forEach(paper => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${paper.topic || 'N/A'}</td>
-          <td>${paper.branch || 'N/A'}</td>
-          <td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
-        `;
-        table.appendChild(row);
-      });
-    } catch (error) {
-      console.error('Error fetching the data:', error);
-    }
+    data.forEach(paper => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${paper.topic || 'N/A'}</td>
+        <td>${paper.branch || 'N/A'}</td>
+        <td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
+      `;
+      table.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error fetching the data:', error);
   }
+}
 
   // Search function to filter the table based on tags input
   function searchTable() {

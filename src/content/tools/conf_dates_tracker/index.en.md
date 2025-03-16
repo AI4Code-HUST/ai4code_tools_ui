@@ -5,6 +5,6 @@ author: "AI4Code"
 draft: true
 ---
 
-# Conferece Dates Tracker 
+# Conference Dates Tracker 
 
 A tool that scrapes conference events from [conf.researchr.org](https://conf.researchr.org), filters them based on the user's needs, and daily updates user Google Calendar via GitHub Actions and emails.

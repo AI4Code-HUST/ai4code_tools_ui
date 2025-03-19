@@ -36,8 +36,8 @@ A tool designed to automatically extract and organize academic publications from
     data.forEach(paper => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${paper.topic || 'N/A'}</td>
-        <td>${paper.branch || 'N/A'}</td>
+        <td>${paper.first_label || 'N/A'}</td>
+        <td>${paper.second_label || 'N/A'}</td>
         <td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
       `;
       table.appendChild(row);
@@ -65,8 +65,8 @@ A tool designed to automatically extract and organize academic publications from
     filteredData.forEach(paper => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${paper.topic || 'N/A'}</td>
-        <td>${paper.branch || 'N/A'}</td>
+        <td>${paper.first_label || 'N/A'}</td>
+        <td>${paper.second_label || 'N/A'}</td>
         <td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
       `;
       table.appendChild(row);

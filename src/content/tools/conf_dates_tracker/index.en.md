@@ -11,6 +11,7 @@ A tool that scrapes conference events from [conf.researchr.org](https://conf.res
 
 ---
 
+
 <div>
     <div class="justify-content-end pb-1">
         <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch">
@@ -19,9 +20,23 @@ A tool that scrapes conference events from [conf.researchr.org](https://conf.res
     </div>
     <div class="collapse pb-1" id="confCrawlerSearch">
         <div class="card card-body">
-            {{< tagsInput id="keywords" label="Keywords" >}}
-            {{< tagsInput id="years" label="Years" >}}
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch" id="conferenceEventDateFilterButton">Save</button>
+            <div class="d-flex align-items-center justify-content-between">
+                <h4>Conferences & Tracks</h4>
+                <div>
+                    <button class="btn btn-link btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#conferenceFilter" aria-expanded="true" aria-controls="conferenceFilter">
+                        Toggle Conferences & Tracks
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" id="uncheckConferences">Uncheck All</button>
+                </div>
+            </div>
+            <div id="conferenceFilter" class="collapse show">
+                <!-- Dynamically generated conference and track checkboxes -->
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch" id="eventFilterButton">
+                    Save
+                </button>
+            </div>
         </div>
     </div>
     <div id="conferenceEventDateTable" class="pb-1"></div>

@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: 2025-03-01T18:44:14+07:00
-draft: true
+draft: false
 author: "AI4Code"
 ---
 

@@ -2,7 +2,7 @@
 title: "Conference Dates Tracker"
 date: 2025-03-02T12:49:20+07:00
 author: "AI4Code"
-draft: true
+draft: false
 ---
 
 # Conference Dates Tracker

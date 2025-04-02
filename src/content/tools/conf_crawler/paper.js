@@ -80,7 +80,7 @@ function filterPapers(papers, selectedYears, keywords) {
             );
 
             // Check if the paper's title contains any of the keywords
-            const keywordMatch = keywords.length === 0 || matchedKeywords.length > 0;
+            const keywordMatch = keywords.length === 0 || matchedKeywords.length == keywords.length;
 
             // Include the paper in the filtered results only if both checks pass
             return yearMatch && keywordMatch

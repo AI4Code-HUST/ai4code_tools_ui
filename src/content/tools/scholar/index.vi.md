@@ -3,6 +3,16 @@ title: "Scholar Mails Crawler"
 date: 2025-03-02T23:41:22+07:00
 draft: false
 author: "AI4Code"
+js:
+  [
+    "https://cdn.jsdelivr.net/npm/use-bootstrap-tag@2.2.2/dist/use-bootstrap-tag.min.js",
+    "https://unpkg.com/gridjs/dist/gridjs.umd.js"
+  ]
+css:
+  [
+    "https://cdn.jsdelivr.net/npm/use-bootstrap-tag@2.2.2/dist/use-bootstrap-tag.min.css",
+    "https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+  ]
 ---
 
 # Scholar Mails Crawler

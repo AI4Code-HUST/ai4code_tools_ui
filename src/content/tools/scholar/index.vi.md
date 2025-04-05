@@ -17,16 +17,11 @@ css:
 
 # Scholar Mails Crawler
 
-A tool designed to automatically extract and organize academic publications from Google Scholar received via email. By parsing alert emails, this project collects metadata such as article titles and theirs links to help researchers stay updated with the latest publications in their field.
+Được thiết kế để tự động thu thập các bài báo học thuật từ Google Scholar thông qua email. Bằng cách phân tích các email cảnh báo, dự án này thu thập siêu dữ liệu như tiêu đề bài báo và liên kết của chúng để giúp các nhà nghiên cứu cập nhật các ấn phẩm mới nhất trong lĩnh vực của họ.
 
 ---
 
 <div>
-    <div class="justify-content-end pb-1">
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch">
-            Filter
-        </button>
-    </div>
     <div class="collapse pb-1" id="confCrawlerSearch">
         <div class="card card-body">
             {{< tagsInput id="keywords" label="Keywords" >}}

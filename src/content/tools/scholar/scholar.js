@@ -35,46 +35,7 @@ fetch(
                 alert("Please enter a valid page number.");
             }
         });
-
-        const saveFilterButton = document.getElementById("paperFilterButton");
-
-        saveFilterButton.addEventListener("click", saveFilter);
     });
-
-function filterPapers(papers, selectedYears, keywords) {
-    return papers
-        .map((paper, index) => {
-            // Check if 'paper' is null or undefined
-            if (!paper) {
-                console.warn(`Paper at index ${index} is ${paper}`);
-                return null;
-            }
-
-            // Extract the year from the 'data' field using a regular expression
-            const yearMatch = paper.data.match(/\b\d{4}\b/);
-            const paperYear = yearMatch ? yearMatch[0] : null;
-
-            // Check if the paper's year matches any of the selected years
-            const yearMatchCondition =
-                selectedYears.length === 0 ||
-                (paperYear && selectedYears.includes(paperYear));
-
-            // Find matched keywords in the paper's title
-            const matchedKeywords = keywords.filter((keyword) =>
-                paper.title.toLowerCase().includes(keyword.toLowerCase())
-            );
-
-            // Check if the paper's title contains any of the keywords
-            const keywordMatchCondition =
-                keywords.length === 0 || matchedKeywords.length > 0;
-
-            // Include the paper in the filtered results only if both checks pass
-            return yearMatchCondition && keywordMatchCondition
-                ? { ...paper, keywords: matchedKeywords.join(", ") }
-                : null;
-        })
-        .filter((paper) => paper !== null); // Remove null values from the array
-}
 
 function renderTable(papers) {
     const table = document.createElement("table");
@@ -215,15 +176,6 @@ function goToPage(pageNumber) {
 function updateTable(papers) {
     renderTable(papers);
     renderPaginationControls(papers);
-}
-
-function saveFilter() {
-    updateTable([]);
-    const years = yearInput.getValues();
-    const words = keywordInput.getValues();
-    filteredPapers = filterPapers(papers, years, words);
-    console.log(filteredPapers);
-    updateTable(filteredPapers);
 }
 
 renderTable(papers);

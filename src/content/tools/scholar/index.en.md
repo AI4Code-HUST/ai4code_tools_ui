@@ -22,11 +22,6 @@ A tool designed to automatically extract and organize academic publications from
 ---
 
 <div>
-    <div class="justify-content-end pb-1">
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch">
-            Filter
-        </button>
-    </div>
     <div class="collapse pb-1" id="confCrawlerSearch">
         <div class="card card-body">
             {{< tagsInput id="keywords" label="Keywords" >}}

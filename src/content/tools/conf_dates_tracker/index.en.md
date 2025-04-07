@@ -1,7 +1,7 @@
 ---
 title: "Conference Dates Tracker"
 date: 2025-03-02T12:49:16+07:00
-author: "AI4Code"
+author: "Trung Phong Au, Duc Manh Tran"
 draft: false
 ---
 

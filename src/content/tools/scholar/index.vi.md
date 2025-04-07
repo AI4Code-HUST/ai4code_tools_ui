@@ -2,7 +2,7 @@
 title: "Scholar Mails Crawler"
 date: 2025-03-02T23:41:22+07:00
 draft: false
-author: "AI4Code"
+author: "Đặng Hoàng Long, Trần Đức Mạnh"
 js:
   [
     "https://cdn.jsdelivr.net/npm/use-bootstrap-tag@2.2.2/dist/use-bootstrap-tag.min.js",

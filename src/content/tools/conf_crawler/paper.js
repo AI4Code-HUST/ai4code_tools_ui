@@ -8,7 +8,7 @@ const pageSize = 20; // Number of papers per page
 let currentPage = 1; // Current page number
 
 fetch(
-    "https://raw.githubusercontent.com/manhtdd/conf-crawler/refs/heads/main/outputs/papers.jsonl"
+    "https://raw.githubusercontent.com/AI4Code-HUST/conf-crawler/refs/heads/main/outputs/papers.jsonl"
 )
     .then((response) => {
         if (!response.ok) {

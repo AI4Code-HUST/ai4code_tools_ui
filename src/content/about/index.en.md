@@ -3,6 +3,7 @@ title: "About"
 date: 2025-03-01T18:44:14+07:00
 draft: false
 author: "AI4Code"
+githubURL: "https://ai4code-hust.github.io/"
 ---
 
 # AI4Code Lab @ HUST

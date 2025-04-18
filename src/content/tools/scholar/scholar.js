@@ -44,7 +44,7 @@ function renderTable(papers) {
     // Create table headers
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
-    const headers = ["Topic", "Branch", "Paper"];
+    const headers = ["Topic", "Branch", "Paper", "Related to"];
     headers.forEach((header) => {
         const th = document.createElement("th");
         th.textContent = header;
@@ -71,6 +71,10 @@ function renderTable(papers) {
         paperCell.innerHTML = `<a href="${paper.link}" target="_blank">${paper.title}</a>`;
         row.appendChild(paperCell);
 
+        const authorCell = document.createElement("td");
+        authorCell.textContent = paper.author ? paper.author.join(", ") : "";
+        row.appendChild(authorCell);
+
         tbody.appendChild(row);
     });
 
@@ -95,6 +99,10 @@ function renderTable(papers) {
             const paperCell = document.createElement("td");
             paperCell.innerHTML = placeholder;
             row.appendChild(paperCell);
+
+            const authorCell = document.createElement("td");
+            authorCell.innerHTML = placeholder;
+            row.appendChild(authorCell);
 
             tbody.appendChild(row);
         }

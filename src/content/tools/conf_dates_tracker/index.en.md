@@ -14,31 +14,20 @@ A tool that scrapes conference events from [conf.researchr.org](https://conf.res
 
 
 <div>
-    <div class="justify-content-end pb-1">
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch">
-            Filter
-        </button>
-    </div>
-    <div class="collapse pb-1" id="confCrawlerSearch">
-        <div class="card card-body">
-            <div class="d-flex align-items-center justify-content-between">
-                <h4>Conferences & Tracks</h4>
-                <div>
-                    <button class="btn btn-link btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#conferenceFilter" aria-expanded="true" aria-controls="conferenceFilter">
-                        Toggle Conferences & Tracks
-                    </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm" id="uncheckConferences">Uncheck All</button>
-                </div>
-            </div>
-            <div id="conferenceFilter" class="collapse show">
-                <!-- Dynamically generated conference and track checkboxes -->
-            </div>
-            <div class="d-flex justify-content-between mt-2">
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch" id="eventFilterButton">
-                    Save
-                </button>
-            </div>
+    <div class="filter-container">
+        <div class="mb-3">
+            <label for="conferenceDropdown" class="form-label">Conference</label>
+            <select id="conferenceDropdown" class="form-select">
+                <option value="">Select Conference</option>
+            </select>
         </div>
+        <div class="mb-3">
+            <label for="trackDropdown" class="form-label">Track</label>
+            <select id="trackDropdown" class="form-select">
+                <option value="">Select Track</option>
+            </select>
+        </div>
+        <button id="applyFilterButton" class="btn btn-primary">Apply Filter</button>
     </div>
     <div id="conferenceEventDateTable" class="pb-1"></div>
     <div class="d-flex flex-row justify-content-center pb-3">

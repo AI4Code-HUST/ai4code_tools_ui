@@ -1,41 +1,51 @@
-const yearInput = UseBootstrapTag(document.getElementById("years"));
-const keywordInput = UseBootstrapTag(document.getElementById("keywords"));
-
 let papers = [];
 let filteredPapers = [];
 
 const pageSize = 20; // Number of papers per page
 let currentPage = 1; // Current page number
 
-fetch(
-    "https://raw.githubusercontent.com/AI4Code-HUST/scholar_alters/master/data/papers.jsonl"
-)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.text();
-    })
-    .then((text) => {
-        papers = text
-            .trim()
-            .split("\n")
-            .map((line) => JSON.parse(line));
-        filteredPapers = papers;
-        console.log(filteredPapers);
-        updateTable(filteredPapers);
+const defaultURL = "https://raw.githubusercontent.com/AI4Code-HUST/scholar_alters/master/data/papers.jsonl";
 
-        const pageNumberInput = document.getElementById("page-number-input");
-
-        pageNumberInput.addEventListener("change", () => {
-            const pageNumber = parseInt(pageNumberInput.value, 10);
-            if (!isNaN(pageNumber)) {
-                goToPage(pageNumber);
-            } else {
-                alert("Please enter a valid page number.");
+function fetchData(url) {
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Data not found");
             }
+            return response.text();
+        })
+        .then((text) => {
+            papers = text
+                .trim()
+                .split("\n")
+                .map((line) => JSON.parse(line));
+            filteredPapers = papers;
+            updateTable(filteredPapers);
+        })
+        .catch(() => {
+            papers = [];
+            filteredPapers = [];
+            updateTable(filteredPapers); // Display nothing if data is not found
         });
-    });
+}
+
+// Load default data
+fetchData(defaultURL);
+
+// Event listener for the date picker
+const datePicker = document.getElementById("selectedDate");
+const applyDateFilter = document.getElementById("applyDateFilter");
+
+applyDateFilter.addEventListener("click", () => {
+    const selectedDate = datePicker.value; // Get the selected date
+    if (selectedDate) {
+        const formattedDate = selectedDate; // Format: YYYY-MM-DD
+        const dateURL = `https://raw.githubusercontent.com/AI4Code-HUST/scholar_alters/master/data/${formattedDate}.jsonl`;
+        fetchData(dateURL); // Fetch data for the selected date
+    } else {
+        alert("Please select a valid date.");
+    }
+});
 
 function renderTable(papers) {
     const table = document.createElement("table");
@@ -79,33 +89,13 @@ function renderTable(papers) {
     });
 
     if (papers.length === 0) {
-        const placeholder = `
-            <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-            </p>
-        `;
-
-        for (let i = 0; i < 5; i++) {
-            const row = document.createElement("tr");
-
-            const topicCell = document.createElement("td");
-            topicCell.innerHTML = placeholder;
-            row.appendChild(topicCell);
-
-            const branchCell = document.createElement("td");
-            branchCell.innerHTML = placeholder;
-            row.appendChild(branchCell);
-
-            const paperCell = document.createElement("td");
-            paperCell.innerHTML = placeholder;
-            row.appendChild(paperCell);
-
-            const authorCell = document.createElement("td");
-            authorCell.innerHTML = placeholder;
-            row.appendChild(authorCell);
-
-            tbody.appendChild(row);
-        }
+        const placeholderRow = document.createElement("tr");
+        const placeholderCell = document.createElement("td");
+        placeholderCell.colSpan = 4;
+        placeholderCell.textContent = "No data available for the selected date.";
+        placeholderCell.classList.add("text-center");
+        placeholderRow.appendChild(placeholderCell);
+        tbody.appendChild(placeholderRow);
     }
 
     table.appendChild(tbody);

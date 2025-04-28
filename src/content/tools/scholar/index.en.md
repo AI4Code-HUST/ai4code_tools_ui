@@ -21,13 +21,18 @@ githubURL: "https://github.com/AI4Code-HUST/scholar_alters"
 A tool designed to automatically extract and organize academic publications from Google Scholar received via email. By parsing alert emails, this project collects metadata such as article titles and theirs links to help researchers stay updated with the latest publications in their field.
 
 ---
-
 <div>
-    <div class="collapse pb-1" id="confCrawlerSearch">
-        <div class="card card-body">
-            {{< tagsInput id="keywords" label="Keywords" >}}
-            {{< tagsInput id="years" label="Years" >}}
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#confCrawlerSearch" aria-expanded="false" aria-controls="confCrawlerSearch" id="paperFilterButton">Save</button>
+    <div class="d-flex justify-content-end pb-1">
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="datePickerDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Date
+            </button>
+            <div class="dropdown-menu p-3" aria-labelledby="datePickerDropdown">
+                <input type="date" class="form-control mb-2" id="selectedDate">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" id="applyDateFilter">Apply</button>
+                </div>
+            </div>
         </div>
     </div>
     <div id="papersTable" class="pb-1"></div>

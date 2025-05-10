@@ -33,10 +33,6 @@ fetch(
                 alert("Please enter a valid page number.");
             }
         });
-
-        const saveFilterButton = document.getElementById("eventFilterButton");
-
-        saveFilterButton.addEventListener("click", saveFilter);
     });
 
 function renderTable(conferenceEvents) {
@@ -119,20 +115,13 @@ function renderTable(conferenceEvents) {
 
     // Handle Empty State
     if (conferenceEvents.length === 0) {
-        const placeholder = `
-            <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-            </p>
-        `;
-        for (let i = 0; i < 5; i++) {
-            const row = document.createElement("tr");
-            for (let j = 0; j < 5; j++) {
-                const cell = document.createElement("td");
-                cell.innerHTML = placeholder;
-                row.appendChild(cell);
-            }
-            tbody.appendChild(row);
-        }
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 5; // Span across all columns
+        cell.textContent = "No items to display.";
+        cell.style.textAlign = "center"; // Center align the text
+        row.appendChild(cell);
+        tbody.appendChild(row);
     }
 
     table.appendChild(tbody);
@@ -214,20 +203,6 @@ function updateTable(event_dates) {
     renderPaginationControls(event_dates);
 }
 
-function filterEvents(events, selectedConferences, selectedTracks, selectedContentTypes) {
-    return events.filter(event => {
-        // Check if event's conference contains any of the selectedConferences as a substring
-        const matchesConference = selectedConferences.some(conf => event.conference.includes(conf));
-
-        // Check if event's track is in selectedTracks[conference] (if any tracks are selected for this conference)
-        const matchesTrack = selectedTracks[event.conference]?.length 
-            ? selectedTracks[event.conference].includes(event.track)
-            : true; // If no tracks are selected for a conference, keep all tracks
-
-        return matchesConference && matchesTrack
-    });
-}
-
 // Function to fetch the filter data from the provided URL
 async function fetchFilterConfig() {
     const url = "https://raw.githubusercontent.com/AI4Code-HUST/conference-date-tracker/refs/heads/main/filter_config.json";
@@ -236,145 +211,75 @@ async function fetchFilterConfig() {
     return filterConfig;
 }
 
-// Function to generate the conference checkboxes
-function generateConferenceCheckboxes(conferenceData) {
-    const container = document.getElementById("conferenceFilter");
-    container.innerHTML = ""; // Clear existing content
-    
-    Object.entries(conferenceData).forEach(([conference, tracks]) => {
-        // Create the conference checkbox
-        const conferenceDiv = document.createElement("div");
-        conferenceDiv.classList.add("form-check");
-        
-        const conferenceCheckbox = document.createElement("input");
-        conferenceCheckbox.type = "checkbox";
-        conferenceCheckbox.classList.add("form-check-input", "conference-checkbox");
-        conferenceCheckbox.id = conference;
-        conferenceCheckbox.checked = true; // Default to true
-        
-        const conferenceLabel = document.createElement("label");
-        conferenceLabel.classList.add("form-check-label", "fw-bold");
-        conferenceLabel.htmlFor = conference;
-        conferenceLabel.textContent = conference;
-        
-        const toggleButton = document.createElement("button");
-        toggleButton.classList.add("btn", "btn-link", "btn-sm");
-        toggleButton.textContent = "Toggle";
-        toggleButton.type = "button";
-        
-        conferenceDiv.appendChild(conferenceCheckbox);
-        conferenceDiv.appendChild(conferenceLabel);
-        conferenceDiv.appendChild(toggleButton);
-        
-        // Create a container for track checkboxes
-        const trackContainer = document.createElement("div");
-        trackContainer.classList.add("ps-3");
-        trackContainer.style.display = "none"; // Initially hidden
-        
-        Object.entries(tracks).forEach(([track, _]) => {
-            const trackDiv = document.createElement("div");
-            trackDiv.classList.add("form-check");
-            
-            const trackCheckbox = document.createElement("input");
-            trackCheckbox.type = "checkbox";
-            trackCheckbox.classList.add("form-check-input", "track-checkbox");
-            trackCheckbox.id = `${conference}-${track.replace(/\s+/g, "-")}`;
-            trackCheckbox.checked = true; // Default to true
-            
-            const trackLabel = document.createElement("label");
-            trackLabel.classList.add("form-check-label");
-            trackLabel.htmlFor = trackCheckbox.id;
-            trackLabel.textContent = track;
-            
-            trackDiv.appendChild(trackCheckbox);
-            trackDiv.appendChild(trackLabel);
-            trackContainer.appendChild(trackDiv);
-        });
-        
-        conferenceDiv.appendChild(trackContainer);
-        container.appendChild(conferenceDiv);
-        
-        // Event listeners to handle parent-child behavior
-        conferenceCheckbox.addEventListener("change", function() {
-            trackContainer.querySelectorAll(".track-checkbox").forEach(trackCb => {
-                trackCb.checked = conferenceCheckbox.checked;
+function generateConferenceDropdowns(conferenceData) {
+    const conferenceDropdown = document.getElementById("conferenceDropdown");
+    const trackDropdown = document.getElementById("trackDropdown");
+
+    // Clear existing options
+    // conferenceDropdown.innerHTML = '<option value="">Select Conference</option>';
+    // trackDropdown.innerHTML = '<option value="">Select Track</option>';
+
+    // Populate the conference dropdown
+    Object.keys(conferenceData).forEach((conference) => {
+        const option = document.createElement("option");
+        option.value = conference;
+        option.textContent = conference;
+        conferenceDropdown.appendChild(option);
+    });
+
+    // Event listener for conference dropdown
+    conferenceDropdown.addEventListener("change", function () {
+        const selectedConference = conferenceDropdown.value;
+
+        // Clear and reset the track dropdown
+        trackDropdown.innerHTML = '<option value="">All tracks</option>';
+
+        if (selectedConference && conferenceData[selectedConference]) {
+            // Populate the track dropdown based on the selected conference
+            Object.keys(conferenceData[selectedConference]).forEach((track) => {
+                const option = document.createElement("option");
+                option.value = track;
+                option.textContent = track;
+                trackDropdown.appendChild(option);
             });
-        });
-        
-        trackContainer.querySelectorAll(".track-checkbox").forEach(trackCb => {
-            trackCb.addEventListener("change", function() {
-                const allTracks = trackContainer.querySelectorAll(".track-checkbox");
-                const checkedTracks = trackContainer.querySelectorAll(".track-checkbox:checked");
-                
-                if (checkedTracks.length === allTracks.length) {
-                    conferenceCheckbox.checked = true;
-                    conferenceCheckbox.indeterminate = false;
-                } else if (checkedTracks.length > 0) {
-                    conferenceCheckbox.checked = false;
-                    conferenceCheckbox.indeterminate = true;
-                } else {
-                    conferenceCheckbox.checked = false;
-                    conferenceCheckbox.indeterminate = false;
-                }
-            });
-        });
-        
-        // Toggle button for showing/hiding tracks
-        toggleButton.addEventListener("click", function() {
-            trackContainer.style.display = trackContainer.style.display === "none" ? "block" : "none";
-        });
+        }
     });
 }
 
-// Initialize the filters by fetching data and generating the checkboxes
-async function initFilters() {
+// Function to filter events based on selected conference and track
+function filterEventsByDropdown(events, selectedConference, selectedTrack) {
+    return events.filter(event => {
+
+        const matchesConference = event.conference.includes(selectedConference);
+
+        const matchesTrack = event.track.includes(selectedTrack);
+
+        return matchesConference && matchesTrack
+    });
+}
+
+// Initialize dropdowns and filters
+async function initDropdownFilters() {
     const filterConfig = await fetchFilterConfig();
 
-    console.log('Filter Config:', filterConfig);
+    console.log("Filter Config:", filterConfig);
 
-    // Initialize the conference filter
-    generateConferenceCheckboxes(filterConfig.track_filter);
-}
+    // Initialize the conference and track dropdowns
+    generateConferenceDropdowns(filterConfig.track_filter);
 
-document.getElementById('uncheckConferences').addEventListener('click', function () {
-    document.querySelectorAll('#conferenceFilter input[type="checkbox"]').forEach(checkbox => {
-        checkbox.checked = false;
+    // Event listener for the filter button
+    const filterButton = document.getElementById("applyFilterButton");
+    filterButton.addEventListener("click", () => {
+        const selectedConference = document.getElementById("conferenceDropdown").value;
+        const selectedTrack = document.getElementById("trackDropdown").value;
+
+        const filteredEvents = filterEventsByDropdown(events, selectedConference, selectedTrack);
+        console.log("Filtered Events:", filteredEvents);
+        updateTable(filteredEvents); // Update the table with the filtered events
     });
-});
-
-
-function saveFilter() {
-    // Get selected conferences
-    const selectedConferences = getSelectedFilters('conferenceFilter', '.conference-checkbox');
-
-    // Gather selected tracks for each selected conference
-    const selectedTracks = {};
-    selectedConferences.forEach(conference => {
-        const selectedTrackValues = getSelectedFilters('conferenceFilter', `.track-checkbox[id^="${conference}-"]`);
-        selectedTracks[conference] = selectedTrackValues;
-    });
-
-    // Get selected content types
-    const selectedContentTypes = getSelectedFilters('contentFilter', '.content-checkbox');
-
-    console.log('Selected Conferences:', selectedConferences);
-    console.log('Selected Tracks:', selectedTracks);
-    console.log('Selected Content Types:', selectedContentTypes);
-
-    // Call a function to filter the events based on the selected filters
-    const filteredEvents = filterEvents(events, selectedConferences, selectedTracks, selectedContentTypes);
-    console.log(filteredEvents);
-    updateTable(filteredEvents); // Update the table with the filtered events
 }
-
-// Helper function to get selected checkboxes inside a container
-function getSelectedFilters(containerId, selector) {
-    return Array.from(document.querySelectorAll(`#${containerId} ${selector}:checked`))
-        .map(checkbox => checkbox.id);
-}
-
 
 // Initialize filters when the page loads
-initFilters();
+initDropdownFilters();
 
 renderTable(events);

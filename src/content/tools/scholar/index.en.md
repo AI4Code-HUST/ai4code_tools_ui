@@ -19,16 +19,17 @@ githubURL: "https://github.com/AI4Code-HUST/scholar_alters"
 A tool designed to automatically extract and organize academic publications from Google Scholar received via email. By parsing alert emails, this project collects metadata such as article titles and theirs links to help researchers stay updated with the latest publications in their field.
 
 ---
+
 <div>
     <div class="d-flex justify-content-end pb-1">
         <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="datePickerDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Select Date
+                Chọn ngày
             </button>
             <div class="dropdown-menu p-3" aria-labelledby="datePickerDropdown">
                 <input type="date" class="form-control mb-2" id="selectedDate">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary" id="applyDateFilter">Apply</button>
+                    <button type="button" class="btn btn-outline-secondary" id="applyDateFilter">Tìm kiếm</button>
                 </div>
             </div>
         </div>
@@ -41,10 +42,12 @@ A tool designed to automatically extract and organize academic publications from
             </ul>
         </nav>
         <div class="input-group input-group-sm ml-2 pb-3" style="width: 13em;">
-            <span class="input-group-text">Page</span>
+            <span class="input-group-text">Trang</span>
             <input type="number" class="form-control" id="page-number-input" min="1" placeholder="Page #" value="1">
             <span class="input-group-text" id="total-pages">of X</span>
         </div>
     </div>
+    {{< include-js path="scholar.js" >}}
+</div>
     {{< include-js path="scholar.js" >}}
 </div>
